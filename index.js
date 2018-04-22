@@ -55,10 +55,28 @@ app.post('/:anime/:season/:episode/:lang', async (req, res) => {
 	const withInfo = info ? insertInfo(converted, i) : converted
 
 	redis.set(`${anime}/${season}/${episode}/${lang}`, withInfo)
+	redis.sadd(`${anime}/${season}/${episode}`, lang)
 
 	res.set('info', JSON.stringify(info))
 	res.type('text')
 	res.end(withInfo)
+})
+
+app.get('/:anime/:season/:episode', async (req, res) => {
+	const { anime, season, episode, lang } = req.params
+
+	const a = await redis.smembers(`${anime}/${season}/${episode}`)
+
+	res.type('json')
+	res.end(JSON.stringify(a))
+})
+
+app.delete('/:anime/:season/:episode/:lang', (req, res) => {
+	const { anime, season, episode, lang } = req.params
+
+	redis.del(`${anime}/${season}/${episode}/${lang}`)
+	redis.srem(`${anime}/${season}/${episode}`, lang)
+	res.end()
 })
 
 const header = fs.readFileSync('header.txt').toString()
@@ -85,13 +103,11 @@ function insertNote(content, insertion) {
 function extractInfos(subs) {
 	const res = /{"info": ?{.+}}/.exec(subs)
 	if (!res) return
-	let o
 	try {
-		o = JSON.parse(res[0])
+		return JSON.parse(res[0])
 	} catch (e) {
 		return
 	}
-	return o && o.info
 }
 
 app.listen(3333, () => console.log('Listening on port 3333'))
