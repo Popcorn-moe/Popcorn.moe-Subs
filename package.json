@@ -34,7 +34,11 @@
     "prettier": "^1.10.2"
   },
   "dependencies": {
+    "ass-to-vtt": "^1.1.1",
     "express": "^4.16.2",
-    "ioredis": "^3.2.2"
+    "ioredis": "^3.2.2",
+    "srt-to-vtt": "^1.1.2",
+    "stream-to-string": "^1.1.0",
+    "string-to-stream": "^1.1.0"
   }
 }
