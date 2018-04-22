@@ -1,0 +1,45 @@
+{
+  "name": "popcorn.moe-subs",
+  "version": "1.0.0",
+  "description": "Popcorn.moe Subs",
+  "main": "index.js",
+  "scripts": {
+    "start": "babel-node index.js",
+    "format": "prettier --write 'index.js' 'schema/*.graphql' 'build/**/*.js' 'migrations/**/*.js' 'src/**/*.js' 'test/**/*.js'",
+    "precommit": "lint-staged",
+    "migration": "node create-migration"
+  },
+  "lint-staged": {
+    "*.{js,graphql}": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Popcorn-moe/Popcorn.moe-Subs.git"
+  },
+  "author": "Popcorn-moe",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/Popcorn-moe/Popcorn.moe-Subs/issues"
+  },
+  "homepage": "https://github.com/Popcorn-moe/Popcorn.moe-Subs#readme",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-jest": "^21.2.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "lint-staged": "^6.1.1",
+    "prettier": "^1.10.2"
+  },
+  "dependencies": {
+    "apollo-server-express": "^1.3.5",
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "graphql": "^0.13.2",
+    "graphql-tools": "^2.23.1",
+    "mongodb": "^2.2.34",
+    "morgan": "^1.9.0"
+  }
+}
